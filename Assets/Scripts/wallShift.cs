@@ -12,19 +12,30 @@ public class wallShift : MonoBehaviour
     public Transform wallA;
     public Transform wallB;
     public Transform wallMid;
+    public GameObject coverA;
+    public GameObject coverB;
 
 
     // internal variables
     int currentDirection;
     float originalPosA;
     float originalPosB;
+    bool coverAlive;
 
     void Start()
     {
-        originalPosA = wallA.localPosition.z;
+        originalPosA = wallA.localPosition.z; // save original position of room boundary walls
         originalPosB = wallB.localPosition.z;
+        coverAlive = true; // cover function enabled by default
 
         shiftUpdate(); // call on start to position the walls according on initial position of the avatar
+
+        if(overlap < 0.225f) // on overlap below 45% cover is disabled
+        {
+            Destroy(coverA);
+            Destroy(coverB);
+            coverAlive = false;
+        }
 
     }
 
@@ -41,18 +52,20 @@ public class wallShift : MonoBehaviour
 
     void shiftUpdate()
     {
-        currentDirection = overlapDirection(avatar.position.z); // override the old position
-
-        if(currentDirection == 1)
+        if(currentDirection != overlapDirection(avatar.position.z)) // shift the wall only if the avatar moved from A section to B section
         {
-            shiftB();
-        }
-        else
-        {
-            shiftA();
+            currentDirection = overlapDirection(avatar.position.z); // override the old position
+            
+            if(currentDirection == 1)
+            {
+                shiftB();
+            }
+            else
+            {
+                shiftA();
+            }
         }
     }
-
 
     int overlapDirection(float z)
     {
@@ -71,6 +84,11 @@ public class wallShift : MonoBehaviour
         resetWalls();
         wallA.localPosition = new Vector3(wallA.localPosition.x, wallA.localPosition.y, wallA.localPosition.z + ((overlap * currentDirection) * 2) );
         wallMid.localPosition = new Vector3(wallMid.localPosition.x, wallMid.localPosition.y, wallMid.localPosition.z + (overlap * currentDirection));
+
+        if(coverAlive)
+        {
+            cover(true);
+        }
     }
 
     void shiftB()
@@ -78,6 +96,17 @@ public class wallShift : MonoBehaviour
         resetWalls();
         wallB.localPosition = new Vector3(wallB.localPosition.x, wallB.localPosition.y, wallB.localPosition.z + ((overlap * currentDirection) * 2) );
         wallMid.localPosition = new Vector3(wallMid.localPosition.x, wallMid.localPosition.y, wallMid.localPosition.z + (overlap * currentDirection));
+
+         if(coverAlive)
+        {
+            cover(false);
+        }
+    }
+
+    void cover(bool toggle)
+    {
+        coverA.SetActive(toggle);
+        coverB.SetActive(!toggle);
     }
 
     void resetWalls()
