@@ -15,6 +15,9 @@ public class dataCollection : MonoBehaviour
     float originalLength;
     bool nextTask;
 
+    float counterQuestion;
+    float counterTask;
+
     TextMesh instance;
     GameObject buttons;
     GameObject pointer1;
@@ -29,6 +32,8 @@ public class dataCollection : MonoBehaviour
       layerMaskGround = 1 << 8;
       triggerThreshold = 0.9f;  
 
+      counterQuestion = 0f;
+      counterTask = 0f;
       nextTask = false;  
 
       buttons = GameObject.Find("Buttons");
@@ -47,7 +52,9 @@ public class dataCollection : MonoBehaviour
         RaycastHit hit;
 
         if(nextTask == false)
-        {   
+        {
+            counterQuestion += Time.deltaTime;
+
             if (Physics.Raycast(hand.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMaskButton))
             {
                 pointer1.SetActive(true);
@@ -59,7 +66,7 @@ public class dataCollection : MonoBehaviour
                 
                 if(OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger) > triggerThreshold)
                 {
-                    recordAnswer(instance.tag);
+                    recordAnswer(instance.tag, counterQuestion);
 
                     buttons.SetActive(false);
                     pointer1.SetActive(false);
@@ -80,6 +87,7 @@ public class dataCollection : MonoBehaviour
 
         else
         {
+            counterTask += Time.deltaTime;
              if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMaskGround))
             { 
                 pointer2.SetActive(true);
@@ -88,8 +96,9 @@ public class dataCollection : MonoBehaviour
 
                 if(OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger) > triggerThreshold)
                 {
-                    recordDistance(hit.point); // record the distance
+                    recordDistance(hit.point, counterTask); // record the distance
                     // load next scene
+                    enabled = false;
                 }
             }
             else
@@ -109,14 +118,14 @@ public class dataCollection : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, length);
     }
 
-    void recordDistance(Vector3 point)
+    void recordDistance(Vector3 point, float time)
     {
         float distance = Vector3.Distance(new Vector3(avatarPos.position.x, 0, avatarPos.position.z), point);
-        Debug.Log(distance);
+        Debug.Log(distance + " completed in: " + time + " sec");
     }
 
-    void recordAnswer(string answer)
+    void recordAnswer(string answer, float time)
     {
-        Debug.Log(answer);
+        Debug.Log(answer + " completed in: " + time + " sec");
     }
 }
