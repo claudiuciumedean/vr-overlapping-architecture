@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class wallShift : MonoBehaviour
+public class WallShift : MonoBehaviour
 {
 
     // input variables

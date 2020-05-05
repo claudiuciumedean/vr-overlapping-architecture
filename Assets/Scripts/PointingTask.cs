@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class dataCollection : MonoBehaviour
+public class PointingTask : MonoBehaviour
 {
     //input variables
     public float length = 1;
@@ -84,7 +84,6 @@ public class dataCollection : MonoBehaviour
             }
 
         }
-
         else
         {
             counterTask += Time.deltaTime;
@@ -107,10 +106,6 @@ public class dataCollection : MonoBehaviour
                 laserLength(length);
             }
         }
-
-
-
-       
     }
 
     void laserLength(float length)
