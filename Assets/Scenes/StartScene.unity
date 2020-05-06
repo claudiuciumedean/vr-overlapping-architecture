@@ -415,3 +415,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf3963222aa14cc79b0dc2b712e2af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
+  trials: 5
