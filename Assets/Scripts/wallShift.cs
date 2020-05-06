@@ -37,6 +37,7 @@ public class WallShift : MonoBehaviour
             coverAlive = false;
         }
 
+        ExperienceManager.Instance.setOverlapLevel(overlap);
     }
 
     void Update()

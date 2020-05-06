@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class ExperienceManager : Singleton<ExperienceManager>
 {
     public int playerId = 0;
+    public int trials = 1;
     List<int> occlusionScenes = new List<int> { 2 };
     List<int> partialOcclusionOneScenes = new List<int> { 3 };
     List<int> partialOcclusionTwoScenes = new List<int> { 4 };
@@ -15,10 +16,10 @@ public class ExperienceManager : Singleton<ExperienceManager>
     bool isMerged = false;
     int condition = 0;
     string overlapLevel = "";
-    string question = "";
-    double answerTime = 0;
-    int distanceEstimation = 0;
-    double estimationTime = 0;
+    string answer = "";
+    float answerTime = 0;
+    float distanceEstimation = 0;
+    float distanceEstimationTime = 0;
 
     private void Start()
     {
@@ -26,17 +27,19 @@ public class ExperienceManager : Singleton<ExperienceManager>
         {
             this.mergeScenes();
             isMerged = true;
-            //foreach (int item in this.scenes) { Debug.Log(item); }
         }
 
         CSVManager.setFileName(this.playerId);
     }
 
     void mergeScenes() {
-        this.scenes.AddRange(occlusionScenes);
-        this.scenes.AddRange(partialOcclusionOneScenes);
-        this.scenes.AddRange(partialOcclusionTwoScenes);
-        this.scenes.AddRange(totalOcclusionScenes);
+        for (int i = 0; i < this.trials; i++)
+        {
+            this.occlusionScenes.ForEach(s => this.scenes.Add(s));
+            this.partialOcclusionOneScenes.ForEach(s => this.scenes.Add(s));
+            this.partialOcclusionTwoScenes.ForEach(s => this.scenes.Add(s));
+            this.totalOcclusionScenes.ForEach(s => this.scenes.Add(s));
+        }
 
         Randomizer.Shuffle(this.scenes);
     }
@@ -65,26 +68,56 @@ public class ExperienceManager : Singleton<ExperienceManager>
         this.condition = condition;
     }
 
-    public void setOverlapLevel(string overlapLevel)
+    public void setOverlapLevel(float overlapLevel)
     {
-        this.overlapLevel = overlapLevel;
+        //0.075 = 15
+        //0.15 = 30
+        //0.225 = 45
+        //0.3 = 60
+        //0.375 = 75
+        switch (overlapLevel)
+        {
+            case 0.075f:
+                this.overlapLevel = "overlap-15";
+                break;
+
+            case 0.15f:
+                this.overlapLevel = "overlap-30";
+                break;
+
+            case 0.225f:
+                this.overlapLevel = "overlap-45";
+                break;
+
+            case 0.3f:
+                this.overlapLevel = "overlap-60";
+                break;
+
+            case 0.375f:
+                this.overlapLevel = "overlap-75";
+                break;
+
+            default:
+                this.overlapLevel = "error";
+                break;
+        }
     }
 
-    public void setQuestionAnswer(string question)
+    public void setAnswer(string answer)
     {
-        this.question = question;
+        this.answer = answer;
     }
 
-    public void setAnswerTime(double time) {
+    public void setAnswerTime(float time) {
         this.answerTime = time;
     }
 
-    public void setDistanceEstimation(int dist) {
+    public void setDistanceEstimation(float dist) {
         this.distanceEstimation = dist;
     }
 
-    public void setEstimationTime(double time) {
-        this.estimationTime = time;
+    public void setDistanceEstimationTime(float time) {
+        this.distanceEstimationTime = time;
     }
 
     public void saveLog()
@@ -93,10 +126,10 @@ public class ExperienceManager : Singleton<ExperienceManager>
             this.playerId.ToString(),
             this.condition.ToString(),
             this.overlapLevel,
-            this.question,
+            this.answer,
             this.answerTime.ToString(),
             this.distanceEstimation.ToString(),
-            this.estimationTime.ToString()
+            this.distanceEstimationTime.ToString()
         });
     }
 }
