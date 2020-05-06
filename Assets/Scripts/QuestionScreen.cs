@@ -116,18 +116,23 @@ public class QuestionScreen : MonoBehaviour
     void recordDistance(Vector3 point, float time)
     {
         float distance = Vector3.Distance(new Vector3(avatarPos.position.x, 0, avatarPos.position.z), point);
-        Debug.Log(distance + " completed in: " + time + " sec");
 
         ExperienceManager.Instance.setDistanceEstimation(distance);
         ExperienceManager.Instance.setDistanceEstimationTime(time);
 
         ExperienceManager.Instance.saveLog();
-        ExperienceManager.Instance.loadScene();
+        StartCoroutine(loadNextScene());
     }
 
     void recordAnswer(string answer, float time)
     {
         ExperienceManager.Instance.setAnswer(answer);
         ExperienceManager.Instance.setAnswerTime(time);
+    }
+
+    IEnumerator loadNextScene()
+    {
+        yield return new WaitForSeconds(5);
+        ExperienceManager.Instance.loadScene();
     }
 }
