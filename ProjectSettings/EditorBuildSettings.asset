@@ -7,20 +7,62 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
-    guid: 4a6fd2b30d6d246bbbae7ec527ff193b
+    guid: 43b777c56ef35ca48b9014a96f15271d
   - enabled: 1
     path: Assets/Scenes/QuestionScene.unity
     guid: 8478b2196df0543438c6fb47ce38460e
   - enabled: 1
-    path: Assets/Scenes/SceneOne.unity
-    guid: 1c506e63c04fa40569c0d1d9ce82c845
+    path: Assets/Scenes/OccludedRooms/0.unity
+    guid: 7942b321877f0c4478ffc95fdfce1e1c
   - enabled: 1
-    path: Assets/Scenes/SceneTwo.unity
-    guid: a06edae0a41b042db8f13c367cc3e740
+    path: Assets/Scenes/OccludedRooms/15.unity
+    guid: 958ed2826a9dd214e8856b0edc9df296
   - enabled: 1
-    path: Assets/Scenes/SceneThree.unity
-    guid: 95a51501e9e764fefa005653f4118967
+    path: Assets/Scenes/OccludedRooms/30.unity
+    guid: 426a1cdaf2dc5a441a431d6c7236bb2b
   - enabled: 1
-    path: Assets/Scenes/SceneFour.unity
-    guid: 4fecef0fb00ed4f72b0c6761ffa57423
+    path: Assets/Scenes/OccludedRooms/60.unity
+    guid: fde554f52545fb44dbc89cbcb40c999e
+  - enabled: 1
+    path: Assets/Scenes/OccludedRooms/45.unity
+    guid: d4b5c4f835eb5404bbd6a541edaa8f72
+  - enabled: 1
+    path: Assets/Scenes/OccludedRooms/75.unity
+    guid: 50875b18d66827c4d88526cb761c08a4
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/0.unity
+    guid: 33077cb3d2913f34caf5d5e1cad34c3d
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/15.unity
+    guid: cbd302837f6f84f479c0c61d0ec1ca23
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/30.unity
+    guid: 42f5c8cad8befa94f9e3cadbc1f0449d
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/45.unity
+    guid: f0d5f6e14b26a4545aba3fb8f0c35762
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/60.unity
+    guid: 49d37799dca3a1e4981bb59e6d6d7e7b
+  - enabled: 1
+    path: Assets/Scenes/OcclussionTotal/75.unity
+    guid: 9b0a49f0d119c864aac4e8e614817c7f
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/0.unity
+    guid: 6f1b1922e1168ab4d96d3728df72583c
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/15.unity
+    guid: d086dd1245d66224886e7d0ed89d4618
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/30.unity
+    guid: 7a779484cfc2a7e4fbb11bc94544b0fe
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/45.unity
+    guid: af6a57258ebfb94499ea66d67b2ecf58
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/60.unity
+    guid: 50e342aa60ccac44fbbd61f12944ab07
+  - enabled: 1
+    path: Assets/Scenes/OccudedCorridor/75.unity
+    guid: 74ac693c5f23398429b57f5198375daa
   m_configObjects: {}
