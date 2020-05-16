@@ -5,12 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ExperienceManager : Singleton<ExperienceManager>
 {
-    public int playerId = 0;
-    public int trials = 1;
-    List<int> occlusionScenes = new List<int> { 2 };
-    List<int> partialOcclusionOneScenes = new List<int> { 3 };
-    List<int> partialOcclusionTwoScenes = new List<int> { 4 };
-    List<int> totalOcclusionScenes = new List<int> { 5 };
+    public int playerId;
+    public int trials = 5;
+    List<int> partialOcclusionOneScenes = new List<int> { 2, 3, 4, 5, 6, 7 };
+    List<int> occlusionScenes = new List<int> { 8, 9, 10, 11, 12, 13 };
+    List<int> partialOcclusionTwoScenes = new List<int> { 14, 15, 16, 17, 18, 19 };
     List<int> scenes = new List<int>();
     int currentScene = 0;
     bool isMerged = false;
@@ -32,16 +31,17 @@ public class ExperienceManager : Singleton<ExperienceManager>
         CSVManager.setFileName(this.playerId);
     }
 
-    void mergeScenes() {
+    void mergeScenes()
+    {
         for (int i = 0; i < this.trials; i++)
         {
             this.occlusionScenes.ForEach(s => this.scenes.Add(s));
             this.partialOcclusionOneScenes.ForEach(s => this.scenes.Add(s));
             this.partialOcclusionTwoScenes.ForEach(s => this.scenes.Add(s));
-            this.totalOcclusionScenes.ForEach(s => this.scenes.Add(s));
         }
 
         Randomizer.Shuffle(this.scenes);
+        Debug.Log(this.scenes.Count + "total scenes");
     }
 
     public void loadStartScene() {
@@ -52,9 +52,15 @@ public class ExperienceManager : Singleton<ExperienceManager>
         SceneManager.LoadScene("QuestionScene");
     }
 
+    public void startExperiment()
+    {
+        SceneManager.LoadScene(this.scenes[this.currentScene]);
+        this.currentScene++;
+    }
+
     public void loadScene() {
-        Debug.Log(this.currentScene); 
-        if(this.currentScene == this.scenes.Count) {
+        Debug.Log(this.currentScene + "current scenes");
+        if (this.currentScene == this.scenes.Count) {
             this.loadStartScene();
             return;
         }
@@ -98,7 +104,7 @@ public class ExperienceManager : Singleton<ExperienceManager>
                 break;
 
             default:
-                this.overlapLevel = "error";
+                this.overlapLevel = "overlap-0";
                 break;
         }
     }

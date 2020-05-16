@@ -5,6 +5,7 @@ using UnityEngine;
 public class SceneChanger : MonoBehaviour
 {
     public int condition = 0;
+    public GameObject checkpoint;
 
     void Start() {
         ExperienceManager.Instance.setCondition(this.condition);
@@ -12,10 +13,16 @@ public class SceneChanger : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             ExperienceManager.Instance.loadQuestionScene();
-            Debug.Log("space key was pressed");
+            Debug.Log("going to next scene");
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            checkpoint.SetActive(true);
+            Debug.Log("showing the checkpoint");
         }
     }
 }

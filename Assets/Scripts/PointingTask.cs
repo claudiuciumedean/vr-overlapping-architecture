@@ -18,12 +18,15 @@ public class PointingTask : MonoBehaviour
     float counterQuestion;
     float counterTask;
 
+    bool isUnlocked = false;
+
     TextMesh instance;
     GameObject buttons;
     GameObject pointer1;
     GameObject pointer2;
     Transform avatarPos;
     Transform hand;
+    GameObject textDist;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,9 @@ public class PointingTask : MonoBehaviour
       pointer2 = GameObject.Find("OVRPlayerController/OVRCameraRig/TrackingSpace/RightHandAnchor/Pointer2");
       avatarPos = GameObject.Find("OVRPlayerController/OVRCameraRig/TrackingSpace/CenterEyeAnchor").GetComponent<Transform>();
       hand = GameObject.Find("OVRPlayerController/OVRCameraRig/TrackingSpace/RightHandAnchor").GetComponent<Transform>();
+      textDist = GameObject.Find("Text");
+
+        textDist.SetActive(false);
 
       laserLength(length);
     }
@@ -82,10 +88,13 @@ public class PointingTask : MonoBehaviour
                     instance.color = Color.white;
                 }
             }
-
         }
-        else
+        else if(nextTask && isUnlocked)
         {
+            if (!textDist.activeSelf)
+            {
+                textDist.SetActive(true);
+            }
             counterTask += Time.deltaTime;
              if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, layerMaskGround))
             { 
@@ -106,6 +115,11 @@ public class PointingTask : MonoBehaviour
                 laserLength(length);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            isUnlocked = true;
+        }
     }
 
     void laserLength(float length)
@@ -116,11 +130,28 @@ public class PointingTask : MonoBehaviour
     void recordDistance(Vector3 point, float time)
     {
         float distance = Vector3.Distance(new Vector3(avatarPos.position.x, 0, avatarPos.position.z), point);
-        Debug.Log(distance + " completed in: " + time + " sec");
+        distance -= 0.2f;
+        float estimation = (distance / 2.90f) * 100; //2.90 is the physical distance between two points
+
+        Debug.Log(estimation + " completed in: " + time + " sec");
+
+        ExperienceManager.Instance.setDistanceEstimation(estimation);
+        ExperienceManager.Instance.setDistanceEstimationTime(time);
+
+        ExperienceManager.Instance.saveLog();
+        StartCoroutine(loadNextScene());
     }
 
     void recordAnswer(string answer, float time)
     {
         Debug.Log(answer + " completed in: " + time + " sec");
+        ExperienceManager.Instance.setAnswer(answer);
+        ExperienceManager.Instance.setAnswerTime(time);
+    }
+
+    IEnumerator loadNextScene()
+    {
+        yield return new WaitForSeconds(2);
+        ExperienceManager.Instance.loadScene();
     }
 }
