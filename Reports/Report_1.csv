@@ -1,11 +1,4 @@
 ID,Condition,Overlap level,Question,Answer Time,Distance Estimation,Estimation Time
-0,3,overlap-30,Possible,12.40606,167.4343,5.613599
-0,3,overlap-75,Impossible,4.133593,165.4032,2.880551
-0,2,overlap-75,Impossible,4.027388,175.2955,1.801411
-0,2,overlap-45,Impossible,6.633012,164.6058,1.330227
-0,1,overlap-75,Impossible,4.893821,132.1353,2.114147
-0,3,overlap-15,Possible,5.209848,142.7982,2.224854
-0,2,overlap-30,Impossible,4.07666,141.4314,2.047653
 0,2,overlap-45,Impossible,46.84204,197.5751,55.41947
 0,2,overlap-75,Impossible,6.266615,223.0198,9.531987
 0,2,overlap-45,Possible,2.749913,189.1126,5.733473
